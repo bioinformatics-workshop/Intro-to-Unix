@@ -5,6 +5,16 @@
 
 In this lesson, we will tackle some more advanced Unix tools and commands.
 
+## Tab Completions
+
+You can save keystroke and avoid typos using tab completion. By pressing the tab key twice, you can complete the names of programs and files on most system. Just type enough letters and the Unix system will give you all the possible options.
+
+Try to use tab completion to change directory to the Intro-to-Unix-I/training_course/brandon/Research_Project directory
+
+```{}
+cd Intro-to-Unix-I/training_course/brandon/Research_Project
+```
+
 ## Redirecting Output (>)
 
 Most command outputs show up on the terminal screen. We can re-direct the output of a command from the screen to a file using the ">" symbol.
