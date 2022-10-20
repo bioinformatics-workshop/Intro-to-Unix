@@ -96,6 +96,12 @@
 <blockquote>
 <p>This command will list the contents of a directory in the long form (-l) format but instead of outputing the results to the terminal screen, the results will be stored in the file &quot;list.txt&quot;</p>
 </blockquote>
+<blockquote>
+<p><strong>Note</strong>: If the file list.txt already exists, the content of the file will be replaced by the new content.</p>
+</blockquote>
+<p>To append content to existing files, we can use the &quot;&gt;&gt;&quot; symbol (two greater than signs)</p>
+<pre><code class="language-{}"><code><div>$ ls -al &gt;&gt; list.txt
+</div></code></code></pre>
 <h2 id="finding-matches-grep">Finding Matches (grep)</h2>
 <p>The <strong>grep</strong> utility allows you to find pattern matches within a file.</p>
 <pre><code class="language-{}"><code><div>$ grep
@@ -141,10 +147,23 @@ training_course/brandon
 </blockquote>
 <h2 id="cut-up-the-file">Cut up the File</h2>
 <p><strong>cut</strong> is a command that allows you to easily select columns of a data file.</p>
-<pre><code class="language-{}"><code><div>$ cut -f1-4 file1.txt
+<pre><code class="language-{}"><code><div>$ cut -f4 file1.txt
+
+B
+A
+C
 </div></code></code></pre>
 <blockquote>
-<p>This will &quot;cut&quot; fields/columns 1 through 4 from file1.txt</p>
+<p>This will &quot;cut&quot; fields/columns 4 from file1.txt</p>
+</blockquote>
+<pre><code class="language-{}"><code><div>$ cut -f1,4 file1.txt
+
+chr1    B
+chr1    A
+chr2    C
+</div></code></code></pre>
+<blockquote>
+<p>This will &quot;cut&quot; fields/columns 1 and 4 from file1.txt</p>
 </blockquote>
 <h2 id="sorting-things-out-sort">Sorting Things Out (sort)</h2>
 <p>The <strong>sort</strong> command allows you to sort the file (in reverse or chronological order, by numbers or dictionaries, etc)</p>
@@ -200,7 +219,7 @@ chr1    1   5   A
 <p>Counting by lines</p>
 <pre><code class="language-{}"><code><div>$ wc -l training_course/brandon/file2.txt
 
-5 training_course/brandon/file2.txt
+6 training_course/brandon/file2.txt
 </div></code></code></pre>
 <p>Counting by words</p>
 <pre><code class="language-{}"><code><div>$ wc -w training_course/brandon/file2.txt
@@ -210,12 +229,12 @@ chr1    1   5   A
 <p>Counting by characters</p>
 <pre><code class="language-{}"><code><div>$ wc -m training_course/brandon/file2.txt
 
-107 training_course/brandon/file2.txt
+69 training_course/brandon/file2.txt
 </div></code></code></pre>
 <p>Counting by lines, words, and byte</p>
 <pre><code class="language-{}"><code><div>$ wc training_course/brandon/file2.txt
 
-5      24     107 training_course/brandon/file2.txt
+5      24     69 training_course/brandon/file2.txt
 </div></code></code></pre>
 <h2 id="laying-pipes">Laying Pipes</h2>
 <p>We can use a combination of these commands consecutively with the | function to arrive at the final output</p>
@@ -235,6 +254,26 @@ chr1    1   5   A
 <blockquote>
 <p>This command first sorts the file by columns 1 and 2, then extracts the unique entries and determines the word count of the remaining entries</p>
 </blockquote>
+<p>Breaking down each step of the pipe:</p>
+<p>Sorting only</p>
+<pre><code class="language-{}"><code><div>$ sort -k1,1d -k2,2n Intro-to-Unix-I/training_course/brandon/file2.txt
+chr1    1       5       A
+chr1    1       5       A
+chr1    1       5       A
+chr1    1       5       A
+chr1    10      20      B
+chr2    3       15      C
+</div></code></code></pre>
+<p>Sorting + uniq</p>
+<pre><code class="language-{}"><code><div>$ sort -k1,1d -k2,2n Intro-to-Unix-I/training_course/brandon/file2.txt | uniq
+chr1    1       5       A
+chr1    10      20      B
+chr2    3       15      C
+</div></code></code></pre>
+<p>Sorting + uniq + wc</p>
+<pre><code class="language-{}"><code><div>$ sort -k1,1d -k2,2n Intro-to-Unix-I/training_course/brandon/file2.txt | uniq | wc
+       3      12      36
+</div></code></code></pre>
 
         <script async src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
         

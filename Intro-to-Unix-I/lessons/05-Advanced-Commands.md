@@ -25,6 +25,16 @@ $ ls -l > list.txt
 ```
 > This command will list the contents of a directory in the long form (-l) format but instead of outputing the results to the terminal screen, the results will be stored in the file "list.txt"
 
+> **Note**: If the file list.txt already exists, the content of the file will be replaced by the new content.
+
+To append content to existing files, we can use the ">>" symbol (two greater than signs)
+
+```{}
+$ ls -al >> list.txt
+```
+
+
+
 ## Finding Matches (grep)
 
 The **grep** utility allows you to find pattern matches within a file.
@@ -90,9 +100,22 @@ training_course/brandon
 **cut** is a command that allows you to easily select columns of a data file. 
 
 ```{}
-$ cut -f1-4 file1.txt
+$ cut -f4 file1.txt
+
+B
+A
+C
 ```
-> This will "cut" fields/columns 1 through 4 from file1.txt
+> This will "cut" fields/columns 4 from file1.txt
+
+```{}
+$ cut -f1,4 file1.txt
+
+chr1    B
+chr1    A
+chr2    C
+```
+> This will "cut" fields/columns 1 and 4 from file1.txt
 
 ## Sorting Things Out (sort)
 
@@ -168,7 +191,7 @@ Counting by lines
 ```{}
 $ wc -l training_course/brandon/file2.txt
 
-5 training_course/brandon/file2.txt
+6 training_course/brandon/file2.txt
 ```
 
 Counting by words
@@ -182,14 +205,14 @@ Counting by characters
 ```{}
 $ wc -m training_course/brandon/file2.txt
 
-107 training_course/brandon/file2.txt
+69 training_course/brandon/file2.txt
 ```
 
 Counting by lines, words, and byte
 ```{}
 $ wc training_course/brandon/file2.txt
 
-5      24     107 training_course/brandon/file2.txt
+5      24     69 training_course/brandon/file2.txt
 ```
 
 ## Laying Pipes
@@ -214,4 +237,27 @@ sort -k1,1d -k2,2n training_course/brandon/file2.txt | uniq | wc
 ```
 > This command first sorts the file by columns 1 and 2, then extracts the unique entries and determines the word count of the remaining entries
 
+Breaking down each step of the pipe:
 
+Sorting only
+```{}
+$ sort -k1,1d -k2,2n Intro-to-Unix-I/training_course/brandon/file2.txt
+chr1    1       5       A
+chr1    1       5       A
+chr1    1       5       A
+chr1    1       5       A
+chr1    10      20      B
+chr2    3       15      C
+```
+Sorting + uniq
+```{}
+$ sort -k1,1d -k2,2n Intro-to-Unix-I/training_course/brandon/file2.txt | uniq
+chr1    1       5       A
+chr1    10      20      B
+chr2    3       15      C
+```
+Sorting + uniq + wc
+```{}
+$ sort -k1,1d -k2,2n Intro-to-Unix-I/training_course/brandon/file2.txt | uniq | wc
+       3      12      36
+```
